@@ -29,25 +29,38 @@ public class MainApp {
 
 
         // Gebruikers aanmaken
-        User u1 = new User("Jan", "Peeters", "Kerkstraat 5","Gent");
-        User u2 = new User("Els", "Vermeulen", "Markt 10", "Brugge");
+        User jan = new User("Jan", "Peeters", "Kerkstraat 5","Gent");
+        User els = new User("Els", "Vermeulen", "Markt 10", "Brugge");
 
-        userService.createUser(u1);
-        System.out.println("User 1 is created :" + u1.getFirstName() + " " + u1.getLastName());
-        userService.createUser(u2);
-        System.out.println("User 2 is created :" + u2.getFirstName() + " " + u2.getLastName());
+        userService.createUser(jan);
+        userService.createUser(els);
+        System.out.println("\uD83D\uDC64\u200B gebruikers aangemaakt");
+        System.out.println(" - " + jan.getFirstName() + " " + jan.getLastName() + jan.getCity());
+        System.out.println(" - " + els.getFirstName() + " " + els.getLastName()+ els.getCity());
+        System.out.println("---------------------------------------");
 
-        // Bericht aanmaken
-        Message m1 = new Message(u1, u2, "Hallo", "Hoe gaat het?");
-
-
-        // Berichten ophalen
+        // Jan stuurt een bericht naar Els
+        Message m1 = new Message(jan, els, "Hallo Els!", "Hoe gaat het?");
         messageService.sendMessage(m1);
-        System.out.println("Message 1: " + m1.getSubject() + " " +m1.getContent());
+        System.out.println(" \uD83D\uDCE9\u200B " + jan.getFirstName() + " stuurt een bericht naar " + els.getFirstName() + " : ");
+        System.out.println(" onderwerp: " + m1.getSubject());
+        System.out.println(" inhoud: " + m1.getContent());
+        System.out.println("----------------------------");
+
+        // Els antwoord op Jan
+        Message m2 = new Message(els,jan," Re: Hallo Jan! "," Alles goed! en met jou?");
+        messageService.sendMessage(m2);
+        System.out.println("\uD83D\uDCE9\u200B " + els.getFirstName() + " anwoordt:");
+        System.out.println( " onderwerp: " + m2.getSubject());
+        System.out.println(" inhoud: " + m2.getContent());
+        System.out.println("------------------------------");
 
 
+        // Toon alle berichten
+        System.out.println("📜 Alle berichten in systeem:");
+        messageService.findAllMessages();
 
-        //codes schrijven....
+
 
 
     }

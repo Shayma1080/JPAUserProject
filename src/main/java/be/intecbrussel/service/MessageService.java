@@ -20,6 +20,10 @@ public static final MessageRepository messageRepository = new MessageRepository(
     public void findAllMessages(){
         EntityManager em = JpaConfig.getEntityManager();
         List<Message> messages = messageRepository.findAll();
+        for(Message m: messages){
+            System.out.println("Van: " + m.getFromUser().getFirstName() + " -> naar: " + m.getToUser().getFirstName()
+            + " | onderwerp: " + m.getSubject() + " | inhoud: " + m.getContent());
+        }
         em.close();
 
     }
