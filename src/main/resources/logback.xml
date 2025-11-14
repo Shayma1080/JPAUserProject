@@ -1,0 +1,32 @@
+<configuration>
+
+    <!-- Appender voor jouw eigen logs in blauw -->
+    <appender name="COLORED_APP" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss} %-5level %logger{36} - %highlight(%msg){F_BLUE}%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender voor Hibernate logs (gewoon wit) -->
+    <appender name="PLAIN_APP" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Jouw package blauw -->
+    <logger name="be.intecbrussel" level="INFO" additivity="false">
+        <appender-ref ref="COLORED_APP"/>
+    </logger>
+
+    <!-- Hibernate wit -->
+    <logger name="org.hibernate" level="INFO" additivity="false">
+        <appender-ref ref="PLAIN_APP"/>
+    </logger>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="PLAIN_APP"/>
+    </root>
+
+</configuration>

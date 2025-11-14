@@ -9,11 +9,16 @@ import be.intecbrussel.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static jakarta.persistence.Persistence.createEntityManagerFactory;
 
 public class MainApp {
+    private static final Logger log = LoggerFactory.getLogger(MainApp.class);
+
     public static void main(String[] args) {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("userdb");
         EntityManager em = emf.createEntityManager();
 
@@ -34,30 +39,31 @@ public class MainApp {
 
         userService.createUser(jan);
         userService.createUser(els);
-        System.out.println("\uD83D\uDC64\u200B gebruikers aangemaakt");
-        System.out.println(" - " + jan.getFirstName() + " " + jan.getLastName() + jan.getCity());
-        System.out.println(" - " + els.getFirstName() + " " + els.getLastName()+ els.getCity());
-        System.out.println("---------------------------------------");
+        log.info("\uD83D\uDC64\u200B gebruikers aangemaakt");
+        log.info(" - {} {} {} ", jan.getFirstName(), jan.getLastName(), jan.getCity());
+        log.info(" - {} {} {} ",  els.getFirstName(), els.getLastName(), els.getCity());
+        log.info("---------------------------------------");
 
         // Jan stuurt een bericht naar Els
         Message m1 = new Message(jan, els, "Hallo Els!", "Hoe gaat het?");
         messageService.sendMessage(m1);
-        System.out.println(" \uD83D\uDCE9\u200B " + jan.getFirstName() + " stuurt een bericht naar " + els.getFirstName() + " : ");
-        System.out.println(" onderwerp: " + m1.getSubject());
-        System.out.println(" inhoud: " + m1.getContent());
-        System.out.println("----------------------------");
+
+        log.info(" \uD83D\uDCE9\u200B {} stuurt een bericht naar {}:", jan.getFirstName(), els.getFirstName());
+        log.info(" onderwerp: {}", m1.getSubject());
+        log.info(" inhoud: {}", m1.getContent());
+        log.info("----------------------------");
 
         // Els antwoord op Jan
         Message m2 = new Message(els,jan," Re: Hallo Jan! "," Alles goed! en met jou?");
         messageService.sendMessage(m2);
-        System.out.println("\uD83D\uDCE9\u200B " + els.getFirstName() + " anwoordt:");
-        System.out.println( " onderwerp: " + m2.getSubject());
-        System.out.println(" inhoud: " + m2.getContent());
-        System.out.println("------------------------------");
+        log.info("\uD83D\uDCE9\u200B {} antwoord: ", els.getFirstName());
+        log.info( " onderwerp: {} ", m2.getSubject());
+        log.info(" inhoud: {}", m2.getContent());
+        log.info("------------------------------");
 
 
         // Toon alle berichten
-        System.out.println("📜 Alle berichten in systeem:");
+        log.info("📜 Alle berichten in systeem:");
         messageService.findAllMessages();
 
 

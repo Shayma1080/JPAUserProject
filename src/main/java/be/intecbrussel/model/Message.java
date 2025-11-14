@@ -1,6 +1,9 @@
 package be.intecbrussel.model;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
+
 @Entity
 @Table(name = "Message")
 public class Message { // eigenaar
@@ -85,5 +88,16 @@ public class Message { // eigenaar
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Message message)) return false;
+        return id == message.id && Objects.equals(subject, message.subject) && Objects.equals(content, message.content) && Objects.equals(fromUser, message.fromUser) && Objects.equals(toUser, message.toUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, subject, content, fromUser, toUser);
     }
 }
